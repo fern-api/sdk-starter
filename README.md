@@ -53,14 +53,13 @@ npm install -g fern-api
 fern login
 ```
 
-3. Install the [Fern GitHub App](https://github.com/apps/fern-api) if you haven't already.
-
 ### Step 4: Configure your SDK settings
 
 The repository comes pre-configured for TypeScript and Python SDK generation in `generators.yml`. You'll need to:
 
 1. Create a GitHub repository for each SDK you want to generate
-2. Uncomment and update the GitHub section in `generators.yml` with your repository information:
+2. Install the [Fern GitHub App](https://github.com/apps/fern-api) in your target repository. 
+3. Uncomment and update the GitHub section in `generators.yml` with your repository information:
 
 ```yaml
 # For Python SDK
