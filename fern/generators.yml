@@ -8,11 +8,11 @@ groups:
     generators:
       - name: fernapi/fern-python-sdk
         version: 4.3.11
-#        output:
-#          location: pypi
-#          package-name: startersdk
-        github:
-          repository: fern-demo/starter-python-sdk
+        output:
+          location: pypi
+          package-name: startersdk
+#        github:
+#          repository: fern-demo/starter-python-sdk
         config:
           client_class_name: Starter
         smart-casing: true
@@ -20,9 +20,9 @@ groups:
     generators:
       - name: fernapi/fern-typescript-node-sdk
         version: 0.48.5
-#        output:
-#          location: npm
-#          package-name: "startersdk"
+        output:
+          location: npm
+          package-name: "startersdk"
 #          # token: ${NPM_TOKEN}
 #        github:
 #          repository: fern-demo/starter-typescript-sdk
