@@ -1,18 +1,19 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 
 api:
-  path: openapi.yaml
+  specs:
+    - openapi: openapi.yaml
 
 groups:
   python-sdk:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.3.11
+        version: 4.14.2
         output:
           location: pypi
           package-name: startersdk
-#        github:
-#          repository: fern-demo/starter-python-sdk
+        #        github:
+        #          repository: fern-demo/starter-python-sdk
         config:
           client_class_name: Starter
         smart-casing: true
@@ -23,9 +24,9 @@ groups:
         output:
           location: npm
           package-name: "startersdk"
-#          # token: ${NPM_TOKEN}
-#        github:
-#          repository: fern-demo/starter-typescript-sdk
+        #          # token: ${NPM_TOKEN}
+        #        github:
+        #          repository: fern-demo/starter-typescript-sdk
         config:
           namespaceExport: Starter
           allowCustomFetcher: true
