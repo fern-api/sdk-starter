@@ -37,7 +37,7 @@ Get inspired by SDKs built with Fern: [Merge](https://github.com/merge-api/merge
 ```json
 {
   "organization": "your-organization-name",
-  "version": "0.46.5"
+  "version": "0.57.2"
 }
 ```
 
