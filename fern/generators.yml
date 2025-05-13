@@ -12,8 +12,8 @@ groups:
         output:
           location: pypi
           package-name: startersdk
-      # github:
-      #   repository: fern-demo/starter-python-sdk
+       # github:
+       #   repository: fern-demo/starter-python-sdk
         config:
           client_class_name: Starter
         smart-casing: true
@@ -24,13 +24,15 @@ groups:
         output:
           location: npm
           package-name: "startersdk"
-        # token: ${NPM_TOKEN}
-      # github:
-      #   repository: fern-demo/starter-typescript-sdk
+          # token: ${NPM_TOKEN}
+          # github:
+          #   repository: fern-demo/starter-typescript-sdk
         config:
           namespaceExport: Starter
           allowCustomFetcher: true
           skipResponseValidation: true
           includeApiReference: true
           noSerdeLayer: true
+          useLegacyExports: false
+          enableInlineTypes: true
         smart-casing: true
