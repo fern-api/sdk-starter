@@ -8,31 +8,30 @@ groups:
   python-sdk:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.18.0
+        version: 4.21.2
         output:
           location: pypi
           package-name: startersdk
-       # github:
-       #   repository: fern-demo/starter-python-sdk
+        # github:
+        #   repository: fern-demo/starter-python-sdk
+        #   mode: pull-request
         config:
-          client_class_name: Starter
-        smart-casing: true
+          client:
+            class_name: Starter
+            filename: client.py
+          pydantic_config:
+            skip_validation: true
+          exclude_types_from_init_exports: true
+
   ts-sdk:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.51.5
+        version: 1.0.0
         output:
           location: npm
-          package-name: "startersdk"
-          # token: ${NPM_TOKEN}
-          # github:
-          #   repository: fern-demo/starter-typescript-sdk
+          package-name: startersdk
+        # github:
+        #   repository: fern-demo/starter-typescript-sdk
+        #   mode: pull-request
         config:
           namespaceExport: Starter
-          allowCustomFetcher: true
-          skipResponseValidation: true
-          includeApiReference: true
-          noSerdeLayer: true
-          useLegacyExports: false
-          enableInlineTypes: true
-        smart-casing: true
