@@ -8,7 +8,7 @@ groups:
   python-sdk:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.21.2
+        version: 4.21.0
         output:
           location: pypi
           package-name: startersdk
