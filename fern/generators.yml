@@ -14,7 +14,6 @@ groups:
           package-name: startersdk
         # github:
         #   repository: fern-demo/starter-python-sdk
-        #   mode: pull-request
         config:
           client:
             class_name: Starter
@@ -32,6 +31,5 @@ groups:
           package-name: startersdk
         # github:
         #   repository: fern-demo/starter-typescript-sdk
-        #   mode: pull-request
         config:
           namespaceExport: Starter
