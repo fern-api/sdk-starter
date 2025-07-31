@@ -37,18 +37,20 @@ Get inspired by SDKs built with Fern: [Merge](https://github.com/merge-api/merge
 ```json
 {
   "organization": "your-organization-name",
-  "version": "0.57.2"
+  "version": "0.65.32"
 }
 ```
 
 ### Step 3: Install and configure Fern
 
 1. Install the Fern CLI globally:
+
 ```bash
 npm install -g fern-api
 ```
 
 2. Log in to Fern:
+
 ```bash
 fern login
 ```
@@ -58,7 +60,7 @@ fern login
 The repository comes pre-configured for TypeScript and Python SDK generation in `generators.yml`. You'll need to:
 
 1. Create a GitHub repository for each SDK you want to generate
-2. Install the [Fern GitHub App](https://github.com/apps/fern-api) in your target repository. 
+2. Install the [Fern GitHub App](https://github.com/apps/fern-api) in your target repository.
 3. Uncomment and update the GitHub section in `generators.yml` with your repository information:
 
 ```yaml
@@ -74,15 +76,19 @@ github:
 ### Step 5: Generate your SDKs
 
 To generate and publish your SDKs:
+
 ```bash
 fern generate --group python-sdk
 ```
+
 AND
+
 ```bash
 fern generate --group ts-sdk
 ```
 
 The generated SDKs will be:
+
 - Committed to your specified GitHub repositories
 - Published to npm (TypeScript) and PyPI (Python) if configured
 - Version-controlled using semantic versioning
