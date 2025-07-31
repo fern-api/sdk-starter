@@ -10,6 +10,8 @@ groups:
         output:
           location: pypi
           package-name: startersdk
+        github:
+          repository: your-org/your-python-sdk-repo
         config:
           client:
             class_name: Starter
@@ -24,6 +26,8 @@ groups:
         output:
           location: npm
           package-name: startersdk
+        github:
+          repository: your-org/your-ts-sdk-repo
         config:
           namespaceExport: Starter
 
