@@ -42,7 +42,7 @@ groups:
   ruby-sdk:
     generators:
       - name: fernapi/fern-ruby-sdk
-        version: 0.8.2
+        version: 1.0.0-rc28
         output:
           location: local-file-system
           path: ../sdks/ruby
@@ -50,7 +50,7 @@ groups:
   csharp-sdk:
     generators:
       - name: fernapi/fern-csharp-sdk
-        version: 1.0.0-rc28
+        version: 2.4.1
         ir-version: v59
         output:
           location: local-file-system
@@ -98,12 +98,12 @@ groups:
           location: local-file-system
           path: ../sdks/local-all/java
       - name: fernapi/fern-ruby-sdk
-        version: 0.8.2
+        version: 1.0.0-rc28
         output:
           location: local-file-system
           path: ../sdks/local-all/ruby
       - name: fernapi/fern-csharp-sdk
-        version: 1.0.0-rc28
+        version: 2.4.1
         ir-version: v59
         output:
           location: local-file-system
