@@ -6,7 +6,7 @@ groups:
   python-sdk:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.25.6
+        version: 4.31.0
         output:
           location: pypi
           package-name: startersdk
@@ -22,7 +22,7 @@ groups:
   ts-sdk:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 2.6.3
+        version: 3.7.0
         output:
           location: npm
           package-name: startersdk
@@ -34,7 +34,7 @@ groups:
   java-sdk:
     generators:
       - name: fernapi/fern-java-sdk
-        version: 2.39.1
+        version: 3.8.9
         output:
           location: local-file-system
           path: ../sdks/java
@@ -50,7 +50,8 @@ groups:
   csharp-sdk:
     generators:
       - name: fernapi/fern-csharp-sdk
-        version: 2.1.1
+        version: 1.0.0-rc28
+        ir-version: v59
         output:
           location: local-file-system
           path: ../sdks/csharp
@@ -58,25 +59,41 @@ groups:
   php-sdk:
     generators:
       - name: fernapi/fern-php-sdk
-        version: 1.16.5
+        version: 1.17.1
         output:
           location: local-file-system
           path: ../sdks/php
 
+  swift-sdk:
+    generators:
+      - name: fernapi/fern-swift-sdk
+        version: 0.18.0
+        output:
+          location: local-file-system
+          path: ../sdks/swift
+
+  rust-sdk:
+    generators:
+      - name: fernapi/fern-rust-sdk
+        version: 0.6.0
+        output:
+          location: local-file-system
+          path: ../sdks/rust
+
   local-all:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 2.6.3
+        version: 3.7.0
         output:
           location: local-file-system
           path: ../sdks/local-all/ts
       - name: fernapi/fern-python-sdk
-        version: 4.25.6
+        version: 4.31.0
         output:
           location: local-file-system
           path: ../sdks/local-all/python
       - name: fernapi/fern-java-sdk
-        version: 2.39.1
+        version: 3.8.9
         output:
           location: local-file-system
           path: ../sdks/local-all/java
@@ -86,12 +103,23 @@ groups:
           location: local-file-system
           path: ../sdks/local-all/ruby
       - name: fernapi/fern-csharp-sdk
-        version: 2.1.1
+        version: 1.0.0-rc28
+        ir-version: v59
         output:
           location: local-file-system
           path: ../sdks/local-all/csharp
       - name: fernapi/fern-php-sdk
-        version: 1.16.5
+        version: 1.17.1
         output:
           location: local-file-system
           path: ../sdks/local-all/php
+      - name: fernapi/fern-swift-sdk
+        version: 0.18.0
+        output:
+          location: local-file-system
+          path: ../sdks/local-all/swift
+      - name: fernapi/fern-rust-sdk
+        version: 0.6.0
+        output:
+          location: local-file-system
+          path: ../sdks/local-all/rust
