@@ -6,7 +6,7 @@ groups:
   python-sdk:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.25.6
+        version: 4.34.0
         output:
           location: pypi
           package-name: startersdk
@@ -21,8 +21,8 @@ groups:
           exclude_types_from_init_exports: true
   ts-sdk:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 2.6.3
+      - name: fernapi/fern-typescript-sdk
+        version: 3.28.4
         output:
           location: npm
           package-name: startersdk
@@ -34,7 +34,7 @@ groups:
   java-sdk:
     generators:
       - name: fernapi/fern-java-sdk
-        version: 2.39.1
+        version: 3.13.0
         output:
           location: local-file-system
           path: ../sdks/java
@@ -50,7 +50,7 @@ groups:
   csharp-sdk:
     generators:
       - name: fernapi/fern-csharp-sdk
-        version: 2.1.1
+        version: 2.7.2
         output:
           location: local-file-system
           path: ../sdks/csharp
@@ -58,25 +58,25 @@ groups:
   php-sdk:
     generators:
       - name: fernapi/fern-php-sdk
-        version: 1.16.5
+        version: 1.18.0
         output:
           location: local-file-system
           path: ../sdks/php
 
   local-all:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 2.6.3
+      - name: fernapi/fern-typescript-sdk
+        version: 3.28.4
         output:
           location: local-file-system
           path: ../sdks/local-all/ts
       - name: fernapi/fern-python-sdk
-        version: 4.25.6
+        version: 4.34.0
         output:
           location: local-file-system
           path: ../sdks/local-all/python
       - name: fernapi/fern-java-sdk
-        version: 2.39.1
+        version: 3.13.0
         output:
           location: local-file-system
           path: ../sdks/local-all/java
@@ -86,12 +86,12 @@ groups:
           location: local-file-system
           path: ../sdks/local-all/ruby
       - name: fernapi/fern-csharp-sdk
-        version: 2.1.1
+        version: 2.7.2
         output:
           location: local-file-system
           path: ../sdks/local-all/csharp
       - name: fernapi/fern-php-sdk
-        version: 1.16.5
+        version: 1.18.0
         output:
           location: local-file-system
           path: ../sdks/local-all/php
