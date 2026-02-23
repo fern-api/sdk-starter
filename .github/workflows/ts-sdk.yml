@@ -15,8 +15,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Download Fern
-        run: npm install -g fern-api
+      - name: Setup Fern CLI
+        uses: fern-api/setup-fern-cli@v1
 
       - name: Generate TypeScript SDK
         env:
