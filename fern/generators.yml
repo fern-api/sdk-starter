@@ -2,11 +2,21 @@
 api:
   specs:
     - openapi: openapi.yaml
+      settings:
+        title-as-schema-name: true
+        type-dates-as-strings: true
+        object-query-parameters: false
+        idiomatic-request-names: false
+        respect-nullable-schemas: false
+        wrap-references-to-nullable-in-optional: true
+        coerce-optional-schemas-to-nullable: true
+        inline-path-parameters: false
+        coerce-enums-to-literals: true
 groups:
   python-sdk:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 4.34.0
+        version: 5.12.11
         output:
           location: pypi
           package-name: startersdk
@@ -19,10 +29,11 @@ groups:
           pydantic_config:
             skip_validation: true
           exclude_types_from_init_exports: true
+        smart-casing: false
   ts-sdk:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 3.28.4
+        version: 3.70.7
         output:
           location: npm
           package-name: startersdk
@@ -30,68 +41,79 @@ groups:
           repository: your-org/your-ts-sdk-repo
         config:
           namespaceExport: Starter
-
+        smart-casing: false
   java-sdk:
     generators:
       - name: fernapi/fern-java-sdk
-        version: 3.13.0
+        version: 4.8.11
         output:
           location: local-file-system
           path: ../sdks/java
-
+        smart-casing: false
+        config:
+          retry-status-codes: legacy
   ruby-sdk:
     generators:
       - name: fernapi/fern-ruby-sdk
-        version: 0.8.2
+        version: 1.12.11
         output:
           location: local-file-system
           path: ../sdks/ruby
-
+        smart-casing: false
   csharp-sdk:
     generators:
       - name: fernapi/fern-csharp-sdk
-        version: 2.7.2
+        version: 2.66.7
         output:
           location: local-file-system
           path: ../sdks/csharp
-
+        smart-casing: false
   php-sdk:
     generators:
       - name: fernapi/fern-php-sdk
-        version: 1.18.0
+        version: 2.10.4
         output:
           location: local-file-system
           path: ../sdks/php
-
+        smart-casing: false
   local-all:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 3.28.4
+        version: 3.70.7
         output:
           location: local-file-system
           path: ../sdks/local-all/ts
+        smart-casing: false
       - name: fernapi/fern-python-sdk
-        version: 4.34.0
+        version: 5.12.11
         output:
           location: local-file-system
           path: ../sdks/local-all/python
+        smart-casing: false
+        config: {}
       - name: fernapi/fern-java-sdk
-        version: 3.13.0
+        version: 4.8.11
         output:
           location: local-file-system
           path: ../sdks/local-all/java
+        smart-casing: false
+        config:
+          retry-status-codes: legacy
       - name: fernapi/fern-ruby-sdk
-        version: 0.8.2
+        version: 1.12.11
         output:
           location: local-file-system
           path: ../sdks/local-all/ruby
+        smart-casing: false
       - name: fernapi/fern-csharp-sdk
-        version: 2.7.2
+        version: 2.66.7
         output:
           location: local-file-system
           path: ../sdks/local-all/csharp
+        smart-casing: false
       - name: fernapi/fern-php-sdk
-        version: 1.18.0
+        version: 2.10.4
         output:
           location: local-file-system
           path: ../sdks/local-all/php
+        smart-casing: false
