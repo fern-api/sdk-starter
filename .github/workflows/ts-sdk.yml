@@ -18,9 +18,10 @@ jobs:
       - name: Setup Fern CLI
         uses: fern-api/setup-fern-cli@v1
 
+      # Generates the SDK, commits it to the SDK repository and creates a release.
+      # The SDK repository's own ci.yml publishes to the registry from that release tag.
       - name: Generate TypeScript SDK
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          fern generate --group ts-sdk --version ${{ inputs.version }} --log-level debug
+          fern generate --target typescript --version ${{ inputs.version }} --log-level debug

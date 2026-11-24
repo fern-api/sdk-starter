@@ -12,7 +12,7 @@
 
 # SDK Starter
 
-Generate production-ready TypeScript and Python SDKs in under 5 minutes using Fern.
+Generate production-ready SDKs in TypeScript, Python, Java, Ruby, C# and PHP in under 5 minutes using Fern.
 
 </div>
 
@@ -36,13 +36,19 @@ Get inspired by SDKs built with Fern: [Merge](https://github.com/merge-api/merge
 ### Step 2: Clone and configure the repo
 
 1. Clone your newly created repository and open it in your favorite code editor (e.g., VS Code).
-2. Open `fern.config.json` and update the `organization` field with your organization name.
+2. Open `fern/fern.config.json` and update the `organization` field with your organization name. Keep the pinned `version`.
 
 ```json
 {
   "organization": "your-organization-name",
-  "version": "0.65.32"
+  "version": "5.228.1"
 }
+```
+
+3. Open `fern/sdk-config.yml` and change `sdkName` to your organization or product name.
+
+```yaml
+sdkName: your-sdk-name
 ```
 
 ### Step 3: Install and configure Fern
@@ -59,49 +65,68 @@ npm install -g fern-api
 fern login
 ```
 
-### Step 4: Configure your SDK settings
+### Step 4: Configure your SDK repositories
 
-The repository comes pre-configured for TypeScript and Python SDK generation in `generators.yml`. You'll need to:
+`fern/sdk-config.yml` has one target per language: Python, TypeScript, Java, Ruby, C# and PHP. Each target publishes its SDK in two steps:
 
-1. Create a GitHub repository for each SDK you want to generate
-2. Install the [Fern GitHub App](https://github.com/apps/fern-api) in your target repository.
-3. Uncomment and update the GitHub section in `generators.yml` with your repository information:
+1. **This repository generates.** A release workflow here runs `fern generate`. Fern commits the generated SDK to that language's own GitHub repository and creates a GitHub release.
+2. **The SDK repository publishes.** Every generated SDK repository includes `.github/workflows/ci.yml`. When the release tag is pushed, it runs the tests and publishes the package to its registry.
+
+For each language you want to ship:
+
+1. Create a GitHub repository for the SDK and install the [Fern GitHub App](https://github.com/apps/fern-api) on it.
+2. In `fern/sdk-config.yml`, set that target's `output.github.repository` to your repository and update its `package` name:
 
 ```yaml
-# For Python SDK
-github:
-  repository: your-org/your-python-sdk-repo
-
-# For TypeScript SDK
-github:
-  repository: your-org/your-typescript-sdk-repo
+targets:
+  - language: python
+    output:
+      delivery: github
+      github:
+        repository: your-org/your-python-sdk-repo
+        mode: release
 ```
 
-### Step 5: Generate your SDKs
+3. Add the registry secrets to **the SDK repository** under **Settings > Secrets and variables > Actions**. The secret names match the `${...}` values in each target's `publish` block:
 
-To generate and publish your SDKs:
+| Language   | Registry      | Secrets in the SDK repository                                                                                         |
+| ---------- | ------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Python     | PyPI          | `PYPI_USERNAME` (set to `__token__`), `PYPI_PASSWORD` (a [PyPI API token](https://pypi.org/help/#apitoken))          |
+| TypeScript | npm           | `NPM_TOKEN` (an [npm automation token](https://docs.npmjs.com/creating-and-viewing-access-tokens))                   |
+| Java       | Maven Central | `MAVEN_USERNAME`, `MAVEN_PASSWORD` (a Central Portal user token), `MAVEN_SIGNATURE_KID`, `MAVEN_SIGNATURE_PASSWORD`, `MAVEN_SIGNATURE_SECRET_KEY` (your GPG signing key) |
+| Ruby       | RubyGems      | `RUBYGEMS_API_KEY` (a [RubyGems API key](https://guides.rubygems.org/api-key-scopes/))                               |
+| C#         | NuGet         | `NUGET_API_KEY` (a [NuGet API key](https://learn.microsoft.com/nuget/nuget-org/publish-a-package#create-an-api-key)) |
+| PHP        | Packagist     | None. [Submit the SDK repository to Packagist](https://packagist.org/packages/submit) once; it picks up each release tag. |
+
+4. Add one secret to **this repository**: `FERN_TOKEN`. Get it by running `fern token`. It is the only secret the release workflows here need.
+
+To drop a language, delete its target from `fern/sdk-config.yml` and its workflow from `.github/workflows/`.
+
+### Step 5: Release your SDKs
+
+From the Actions tab of this repository, run the release workflow for a language (for example **Release Python SDK**) and enter a version. Each language has one: `python-sdk.yml`, `ts-sdk.yml`, `java-sdk.yml`, `ruby-sdk.yml`, `csharp-sdk.yml` and `php-sdk.yml`.
+
+You can run the same thing locally from the root of the repository. It creates a real release, so the SDK repository will publish it:
 
 ```bash
-fern generate --group python-sdk
+fern generate --target python --version 1.0.0
 ```
 
-AND
+If you just want to try the generated code, see [Preview an SDK locally](#preview-an-sdk-locally) instead.
+
+## Preview an SDK locally
+
+To try an SDK without pushing to GitHub or publishing, generate it into a local folder. You only need to be logged in to Fern. From the root of the repository, run:
 
 ```bash
-fern generate --group ts-sdk
+fern generate --target <lang> --preview --output sdks/preview/<lang>
 ```
 
-The generated SDKs will be:
-
-- Committed to your specified GitHub repositories
-- Published to npm (TypeScript) and PyPI (Python) if configured
-- Version-controlled using semantic versioning
+Replace `<lang>` with `python`, `typescript`, `java`, `ruby`, `csharp` or `php`. The SDK is written to a folder inside `sdks/preview/<lang>` (for example `sdks/preview/python/fern-python-sdk-0`).
 
 ## Customization Options
 
-The starter comes with some pre-configured options in `generators.yml`:
-
-You can modify these configurations or add additional options by editing `generators.yml`.
+All SDK settings live in `fern/sdk-config.yml`, with one entry under `targets` per language. You can change package names, client names, publishing and more there. See the [SDK Config reference](https://buildwithfern.com/learn/sdks/reference/sdk-config) for every option.
 
 ---
 

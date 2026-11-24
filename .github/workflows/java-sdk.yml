@@ -1,0 +1,27 @@
+name: Release Java SDK
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "The version of the Java SDK that you would like to release"
+        required: true
+        type: string
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Fern CLI
+        uses: fern-api/setup-fern-cli@v1
+
+      # Generates the SDK, commits it to the SDK repository and creates a release.
+      # The SDK repository's own ci.yml publishes to the registry from that release tag.
+      - name: Generate Java SDK
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          fern generate --target java --version ${{ inputs.version }} --log-level debug

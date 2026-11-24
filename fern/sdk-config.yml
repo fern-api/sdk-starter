@@ -1,0 +1,126 @@
+schemaVersion: sdk-config/v1
+sdkName: fernstarterpack
+source:
+  specs:
+    - id: openapi
+      type: openapi
+      path: ./openapi.yaml
+  apiImportSettings:
+    respectNullableSchemas: false
+    titleAsSchemaName: true
+    coerceEnumsToLiterals: true
+    idiomaticRequestNames: false
+    wrapReferencesToNullableInOptional: true
+    coerceOptionalSchemasToNullable: true
+    objectQueryParameters: false
+    typeDatesAsStrings: true
+generation:
+  naming:
+    smartCasing: false
+targets:
+  # Every target is delivered to its own GitHub repository with `mode: release`:
+  # Fern commits the generated SDK and creates a GitHub release. The SDK repository's
+  # generated .github/workflows/ci.yml then publishes to the registry when the release
+  # tag is pushed.
+  #
+  # The ${...} values below are names of GitHub Actions secrets that you add to each
+  # SDK repository (not to this repository). Fern never reads the token values.
+  - language: python
+    output:
+      delivery: github
+      github:
+        # Replace with your SDK repository and install the Fern GitHub App on it.
+        repository: your-org/your-python-sdk-repo
+        mode: release
+      publish:
+        registry: pypi
+        url: https://upload.pypi.org/legacy/
+        # In the SDK repository, set PYPI_USERNAME to __token__ and
+        # PYPI_PASSWORD to a PyPI API token.
+        username: ${PYPI_USERNAME}
+        password: ${PYPI_PASSWORD}
+    client:
+      responseValidation: false
+    package:
+      packageName: startersdk
+    generation:
+      naming:
+        clientName: Starter
+      client:
+        fileName: client.py
+  - language: typescript
+    output:
+      delivery: github
+      github:
+        repository: your-org/your-ts-sdk-repo
+        mode: release
+      publish:
+        registry: npm
+        url: https://registry.npmjs.org
+        # npm automation token, stored as the NPM_TOKEN secret in the SDK repository.
+        token: ${NPM_TOKEN}
+    package:
+      packageName: startersdk
+    generation:
+      namespaceExportName: Starter
+  - language: java
+    output:
+      delivery: github
+      github:
+        repository: your-org/your-java-sdk-repo
+        mode: release
+      publish:
+        registry: maven
+        # Maven Central user token and GPG signing key, stored as secrets in the
+        # SDK repository.
+        username: ${MAVEN_USERNAME}
+        password: ${MAVEN_PASSWORD}
+        signature:
+          keyId: ${MAVEN_SIGNATURE_KID}
+          password: ${MAVEN_SIGNATURE_PASSWORD}
+          secretKey: ${MAVEN_SIGNATURE_SECRET_KEY}
+    package:
+      # Maven coordinates are required for publishing. Use a group you own on Maven Central.
+      groupId: com.yourorg
+      artifactId: startersdk
+    client:
+      retry:
+        statusCodeProfile: legacy
+  - language: ruby
+    output:
+      delivery: github
+      github:
+        repository: your-org/your-ruby-sdk-repo
+        mode: release
+      publish:
+        registry: rubygems
+        # RubyGems API key, stored as the RUBYGEMS_API_KEY secret in the SDK repository.
+        apiKey: ${RUBYGEMS_API_KEY}
+    package:
+      packageName: startersdk
+  - language: csharp
+    output:
+      delivery: github
+      github:
+        repository: your-org/your-csharp-sdk-repo
+        mode: release
+      publish:
+        registry: nuget
+        # NuGet API key, stored as the NUGET_API_KEY secret in the SDK repository.
+        apiKey: ${NUGET_API_KEY}
+    package:
+      packageName: StarterSdk
+  - language: php
+    output:
+      delivery: github
+      github:
+        repository: your-org/your-php-sdk-repo
+        mode: release
+      publish:
+        # No secrets needed: submit the SDK repository to Packagist once, and
+        # Packagist picks up each release tag from GitHub.
+        registry: composer
+    package:
+      packageName: your-org/startersdk
+client:
+  pathParameterStyle: wrapped
