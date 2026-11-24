@@ -98,7 +98,16 @@ targets:
 
 ### Step 5: Generate your SDKs
 
-To generate and publish your SDKs:
+Running these commands publishes a real release: the SDK is pushed to your GitHub repository and published to PyPI (Python) or npm (TypeScript). `fern/sdk-config.yml` reads the registry tokens from your environment, so export them in your shell first:
+
+```bash
+export PYPI_TOKEN=your-pypi-token
+export NPM_TOKEN=your-npm-token
+```
+
+If you just want to try the generated code, see [Preview an SDK locally](#preview-an-sdk-locally) instead.
+
+To generate and publish your SDKs, run these from the root of the repository:
 
 ```bash
 fern generate --target python
@@ -120,14 +129,14 @@ To release from CI instead, run the **Release Python SDK** or **Release TypeScri
 
 ## Preview an SDK locally
 
-To try an SDK without pushing to GitHub or publishing, generate it into a local folder. You only need to be logged in to Fern:
+To try an SDK without pushing to GitHub or publishing, generate it into a local folder. You only need to be logged in to Fern. From the root of the repository, change into the `fern` folder and run:
 
 ```bash
 cd fern
-fern generate --target <lang> --preview --output ../sdks/local-all/<lang>
+fern generate --target <lang> --preview --output ../sdks/preview/<lang>
 ```
 
-Replace `<lang>` with `python`, `typescript`, `java`, `ruby`, `csharp` or `php`. The SDK is written to `sdks/local-all/<lang>`.
+Replace `<lang>` with `python`, `typescript`, `java`, `ruby`, `csharp` or `php`. The SDK is written to `sdks/preview/<lang>` at the repository root.
 
 ## Customization Options
 
