@@ -36,13 +36,19 @@ Get inspired by SDKs built with Fern: [Merge](https://github.com/merge-api/merge
 ### Step 2: Clone and configure the repo
 
 1. Clone your newly created repository and open it in your favorite code editor (e.g., VS Code).
-2. Open `fern.config.json` and update the `organization` field with your organization name.
+2. Open `fern/fern.config.json` and update the `organization` field with your organization name. Keep the pinned `version`.
 
 ```json
 {
   "organization": "your-organization-name",
-  "version": "0.65.32"
+  "version": "5.228.1"
 }
+```
+
+3. Open `fern/sdk-config.yml` and change `sdkName` to your organization or product name.
+
+```yaml
+sdkName: your-sdk-name
 ```
 
 ### Step 3: Install and configure Fern
@@ -61,34 +67,47 @@ fern login
 
 ### Step 4: Configure your SDK settings
 
-The repository comes pre-configured for TypeScript and Python SDK generation in `generators.yml`. You'll need to:
+The repository comes pre-configured for TypeScript and Python SDK generation in `fern/sdk-config.yml`. You'll need to:
 
-1. Create a GitHub repository for each SDK you want to generate
-2. Install the [Fern GitHub App](https://github.com/apps/fern-api) in your target repository.
-3. Uncomment and update the GitHub section in `generators.yml` with your repository information:
+1. Create a GitHub repository for each SDK you want to generate.
+2. Install the [Fern GitHub App](https://github.com/apps/fern-api) in each of those repositories.
+3. In `fern/sdk-config.yml`, set `output.github.repository` on the `python` and `typescript` targets to your repositories:
 
 ```yaml
-# For Python SDK
-github:
-  repository: your-org/your-python-sdk-repo
+targets:
+  - language: python
+    output:
+      delivery: github
+      github:
+        repository: your-org/your-python-sdk-repo
 
-# For TypeScript SDK
-github:
-  repository: your-org/your-typescript-sdk-repo
+  - language: typescript
+    output:
+      delivery: github
+      github:
+        repository: your-org/your-ts-sdk-repo
 ```
+
+4. Add these secrets to your template repository under **Settings > Secrets and variables > Actions**. The release workflows in `.github/workflows/` read them.
+
+| Secret       | Where to get it                                                                                   |
+| ------------ | ------------------------------------------------------------------------------------------------- |
+| `FERN_TOKEN` | Run `fern token`                                                                                  |
+| `PYPI_TOKEN` | Create an [API token](https://pypi.org/help/#apitoken) in your PyPI account settings              |
+| `NPM_TOKEN`  | Create an [automation token](https://docs.npmjs.com/creating-and-viewing-access-tokens) on npm    |
 
 ### Step 5: Generate your SDKs
 
 To generate and publish your SDKs:
 
 ```bash
-fern generate --group python-sdk
+fern generate --target python
 ```
 
 AND
 
 ```bash
-fern generate --group ts-sdk
+fern generate --target typescript
 ```
 
 The generated SDKs will be:
@@ -97,11 +116,24 @@ The generated SDKs will be:
 - Published to npm (TypeScript) and PyPI (Python) if configured
 - Version-controlled using semantic versioning
 
+To release from CI instead, run the **Release Python SDK** or **Release TypeScript SDK** workflow from the Actions tab and enter a version.
+
+## Preview an SDK locally
+
+To try an SDK without pushing to GitHub or publishing, generate it into a local folder. You only need to be logged in to Fern:
+
+```bash
+cd fern
+fern generate --target <lang> --preview --output ../sdks/local-all/<lang>
+```
+
+Replace `<lang>` with `python`, `typescript`, `java`, `ruby`, `csharp` or `php`. The SDK is written to `sdks/local-all/<lang>`.
+
 ## Customization Options
 
-The starter comes with some pre-configured options in `generators.yml`:
+All SDK settings live in `fern/sdk-config.yml`, with one entry under `targets` per language. Besides Python and TypeScript, the starter configures Java, Ruby, C# and PHP. Those four write to `sdks/<lang>` on your machine when you run `fern generate --target <lang>`.
 
-You can modify these configurations or add additional options by editing `generators.yml`.
+You can modify these settings or add more options by editing `fern/sdk-config.yml`. See the [SDK Config reference](https://buildwithfern.com/learn/sdks/reference/sdk-config) for every option.
 
 ---
 
