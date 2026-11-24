@@ -129,14 +129,13 @@ To release from CI instead, run the **Release Python SDK** or **Release TypeScri
 
 ## Preview an SDK locally
 
-To try an SDK without pushing to GitHub or publishing, generate it into a local folder. You only need to be logged in to Fern. From the root of the repository, change into the `fern` folder and run:
+To try an SDK without pushing to GitHub or publishing, generate it into a local folder. You only need to be logged in to Fern. From the root of the repository, run:
 
 ```bash
-cd fern
-fern generate --target <lang> --preview --output ../sdks/preview/<lang>
+fern generate --target <lang> --preview --output sdks/preview/<lang>
 ```
 
-Replace `<lang>` with `python`, `typescript`, `java`, `ruby`, `csharp` or `php`. The SDK is written to `sdks/preview/<lang>` at the repository root.
+Replace `<lang>` with `python`, `typescript`, `java`, `ruby`, `csharp` or `php`. The SDK is written to a folder inside `sdks/preview/<lang>` (for example `sdks/preview/python/fern-python-sdk-0`).
 
 ## Customization Options
 
