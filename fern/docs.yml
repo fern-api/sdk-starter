@@ -21,6 +21,11 @@ navigation:
         path: docs/pages/sdks.mdx
         slug: sdks
   - api: API Reference
+    specs:
+      - type: openapi
+        path: ./openapi.yaml
+        settings:
+          type-dates-as-strings: true
 
 navbar-links:
   - type: secondary

@@ -1,0 +1,72 @@
+schemaVersion: sdk-config/v1
+sdkName: fernstarterpack
+source:
+  specs:
+    - id: openapi
+      type: openapi
+      path: ./openapi.yaml
+  apiImportSettings:
+    respectNullableSchemas: false
+    titleAsSchemaName: true
+    coerceEnumsToLiterals: true
+    idiomaticRequestNames: false
+    wrapReferencesToNullableInOptional: true
+    coerceOptionalSchemasToNullable: true
+    objectQueryParameters: false
+    typeDatesAsStrings: true
+generation:
+  naming:
+    smartCasing: false
+targets:
+  - language: python
+    output:
+      delivery: github
+      github:
+        repository: your-org/your-python-sdk-repo
+        mode: release
+      publish:
+        registry: pypi
+        url: https://upload.pypi.org/legacy/
+    client:
+      responseValidation: false
+    package:
+      packageName: startersdk
+    generation:
+      naming:
+        clientName: Starter
+      client:
+        fileName: client.py
+  - language: typescript
+    output:
+      delivery: github
+      github:
+        repository: your-org/your-ts-sdk-repo
+        mode: release
+      publish:
+        registry: npm
+        url: https://registry.npmjs.org
+    package:
+      packageName: startersdk
+    generation:
+      namespaceExportName: Starter
+  - language: java
+    output:
+      delivery: files
+      path: ../sdks/java
+    client:
+      retry:
+        statusCodeProfile: legacy
+  - language: ruby
+    output:
+      delivery: files
+      path: ../sdks/ruby
+  - language: csharp
+    output:
+      delivery: files
+      path: ../sdks/csharp
+  - language: php
+    output:
+      delivery: files
+      path: ../sdks/php
+client:
+  pathParameterStyle: wrapped
