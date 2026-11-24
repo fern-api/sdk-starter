@@ -12,7 +12,7 @@
 
 # SDK Starter
 
-Generate production-ready TypeScript and Python SDKs in under 5 minutes using Fern.
+Generate production-ready SDKs in TypeScript, Python, Java, Ruby, C# and PHP in under 5 minutes using Fern.
 
 </div>
 
@@ -65,13 +65,17 @@ npm install -g fern-api
 fern login
 ```
 
-### Step 4: Configure your SDK settings
+### Step 4: Configure your SDK repositories
 
-The repository comes pre-configured for TypeScript and Python SDK generation in `fern/sdk-config.yml`. You'll need to:
+`fern/sdk-config.yml` has one target per language: Python, TypeScript, Java, Ruby, C# and PHP. Each target publishes its SDK in two steps:
 
-1. Create a GitHub repository for each SDK you want to generate.
-2. Install the [Fern GitHub App](https://github.com/apps/fern-api) in each of those repositories.
-3. In `fern/sdk-config.yml`, set `output.github.repository` on the `python` and `typescript` targets to your repositories:
+1. **This repository generates.** A release workflow here runs `fern generate`. Fern commits the generated SDK to that language's own GitHub repository and creates a GitHub release.
+2. **The SDK repository publishes.** Every generated SDK repository includes `.github/workflows/ci.yml`. When the release tag is pushed, it runs the tests and publishes the package to its registry.
+
+For each language you want to ship:
+
+1. Create a GitHub repository for the SDK and install the [Fern GitHub App](https://github.com/apps/fern-api) on it.
+2. In `fern/sdk-config.yml`, set that target's `output.github.repository` to your repository and update its `package` name:
 
 ```yaml
 targets:
@@ -80,52 +84,35 @@ targets:
       delivery: github
       github:
         repository: your-org/your-python-sdk-repo
-
-  - language: typescript
-    output:
-      delivery: github
-      github:
-        repository: your-org/your-ts-sdk-repo
+        mode: release
 ```
 
-4. Add these secrets to your template repository under **Settings > Secrets and variables > Actions**. The release workflows in `.github/workflows/` read them.
+3. Add the registry secrets to **the SDK repository** under **Settings > Secrets and variables > Actions**. The secret names match the `${...}` values in each target's `publish` block:
 
-| Secret       | Where to get it                                                                                   |
-| ------------ | ------------------------------------------------------------------------------------------------- |
-| `FERN_TOKEN` | Run `fern token`                                                                                  |
-| `PYPI_TOKEN` | Create an [API token](https://pypi.org/help/#apitoken) in your PyPI account settings              |
-| `NPM_TOKEN`  | Create an [automation token](https://docs.npmjs.com/creating-and-viewing-access-tokens) on npm    |
+| Language   | Registry      | Secrets in the SDK repository                                                                                         |
+| ---------- | ------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Python     | PyPI          | `PYPI_USERNAME` (set to `__token__`), `PYPI_PASSWORD` (a [PyPI API token](https://pypi.org/help/#apitoken))          |
+| TypeScript | npm           | `NPM_TOKEN` (an [npm automation token](https://docs.npmjs.com/creating-and-viewing-access-tokens))                   |
+| Java       | Maven Central | `MAVEN_USERNAME`, `MAVEN_PASSWORD` (a Central Portal user token), `MAVEN_SIGNATURE_KID`, `MAVEN_SIGNATURE_PASSWORD`, `MAVEN_SIGNATURE_SECRET_KEY` (your GPG signing key) |
+| Ruby       | RubyGems      | `RUBYGEMS_API_KEY` (a [RubyGems API key](https://guides.rubygems.org/api-key-scopes/))                               |
+| C#         | NuGet         | `NUGET_API_KEY` (a [NuGet API key](https://learn.microsoft.com/nuget/nuget-org/publish-a-package#create-an-api-key)) |
+| PHP        | Packagist     | None. [Submit the SDK repository to Packagist](https://packagist.org/packages/submit) once; it picks up each release tag. |
 
-### Step 5: Generate your SDKs
+4. Add one secret to **this repository**: `FERN_TOKEN`. Get it by running `fern token`. It is the only secret the release workflows here need.
 
-Running these commands publishes a real release: the SDK is pushed to your GitHub repository and published to PyPI (Python) or npm (TypeScript). `fern/sdk-config.yml` reads the registry tokens from your environment, so export them in your shell first:
+To drop a language, delete its target from `fern/sdk-config.yml` and its workflow from `.github/workflows/`.
+
+### Step 5: Release your SDKs
+
+From the Actions tab of this repository, run the release workflow for a language (for example **Release Python SDK**) and enter a version. Each language has one: `python-sdk.yml`, `ts-sdk.yml`, `java-sdk.yml`, `ruby-sdk.yml`, `csharp-sdk.yml` and `php-sdk.yml`.
+
+You can run the same thing locally from the root of the repository. It creates a real release, so the SDK repository will publish it:
 
 ```bash
-export PYPI_TOKEN=your-pypi-token
-export NPM_TOKEN=your-npm-token
+fern generate --target python --version 1.0.0
 ```
 
 If you just want to try the generated code, see [Preview an SDK locally](#preview-an-sdk-locally) instead.
-
-To generate and publish your SDKs, run these from the root of the repository:
-
-```bash
-fern generate --target python
-```
-
-AND
-
-```bash
-fern generate --target typescript
-```
-
-The generated SDKs will be:
-
-- Committed to your specified GitHub repositories
-- Published to npm (TypeScript) and PyPI (Python) if configured
-- Version-controlled using semantic versioning
-
-To release from CI instead, run the **Release Python SDK** or **Release TypeScript SDK** workflow from the Actions tab and enter a version.
 
 ## Preview an SDK locally
 
@@ -139,9 +126,7 @@ Replace `<lang>` with `python`, `typescript`, `java`, `ruby`, `csharp` or `php`.
 
 ## Customization Options
 
-All SDK settings live in `fern/sdk-config.yml`, with one entry under `targets` per language. Besides Python and TypeScript, the starter configures Java, Ruby, C# and PHP. Those four write to `sdks/<lang>` on your machine when you run `fern generate --target <lang>`.
-
-You can modify these settings or add more options by editing `fern/sdk-config.yml`. See the [SDK Config reference](https://buildwithfern.com/learn/sdks/reference/sdk-config) for every option.
+All SDK settings live in `fern/sdk-config.yml`, with one entry under `targets` per language. You can change package names, client names, publishing and more there. See the [SDK Config reference](https://buildwithfern.com/learn/sdks/reference/sdk-config) for every option.
 
 ---
 
