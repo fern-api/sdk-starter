@@ -22,11 +22,17 @@ targets:
     output:
       delivery: github
       github:
+        # Replace with your own repo and install the Fern GitHub App on it.
         repository: your-org/your-python-sdk-repo
         mode: release
       publish:
         registry: pypi
         url: https://upload.pypi.org/legacy/
+        # Keep the username as __token__ when publishing with a PyPI API token.
+        username: __token__
+        # Read from the environment. In CI, set the PYPI_TOKEN secret
+        # (see .github/workflows/python-sdk.yml).
+        password: ${PYPI_TOKEN}
     client:
       responseValidation: false
     package:
@@ -40,11 +46,17 @@ targets:
     output:
       delivery: github
       github:
+        # Replace with your own repo and install the Fern GitHub App on it.
         repository: your-org/your-ts-sdk-repo
         mode: release
       publish:
         registry: npm
         url: https://registry.npmjs.org
+        # Read from the environment. In CI, set the NPM_TOKEN secret
+        # (see .github/workflows/ts-sdk.yml).
+        # To use npm trusted publishing instead, replace this line with
+        # trustedPublishing: true
+        token: ${NPM_TOKEN}
     package:
       packageName: startersdk
     generation:
